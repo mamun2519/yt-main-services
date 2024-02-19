@@ -1,18 +1,18 @@
-import mongoose from "mongoose";
-import { IGenericErrorMessage } from "../interface/";
+import mongoose from 'mongoose'
+import { IGenericErrorMessage } from '../interface/error'
 const handleCastError = (error: mongoose.Error.CastError) => {
   const errors: IGenericErrorMessage[] = [
     {
       path: error.path,
-      message: "Invalid Id",
+      message: 'Invalid Id',
     },
-  ];
-  const statusCode = 4000;
+  ]
+  const statusCode = 4000
   return {
     statusCode,
-    message: "Cast Error",
+    message: 'Cast Error',
     errorMessages: errors,
-  };
-};
+  }
+}
 
-export default handleCastError;
+export default handleCastError
