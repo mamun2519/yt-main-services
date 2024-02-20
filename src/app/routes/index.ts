@@ -1,11 +1,12 @@
 import express from 'express'
+import { KeywordRoute } from '../modules/keyword/keyword.route'
 
 const router = express.Router()
 
 const moduleRoutes = [
   {
-    path: '',
-    route: '',
+    path: '/keyword',
+    route: KeywordRoute,
   },
 ]
 
