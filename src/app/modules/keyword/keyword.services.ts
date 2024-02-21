@@ -16,8 +16,14 @@ const getOneKeywordFromDB = async (id: string): Promise<IKeyword | null> => {
     return keyword;
 }
 
+const getTrendingKeywordsFromDB = async (): Promise<IKeyword[]> => {
+    const trendingKeywords = await Keyword.find().sort({ count: -1 });
+    return trendingKeywords;
+}
+
 export const KeywordService = { 
     keywordPostIntoDB,
     getKeywordsFromDB,
-    getOneKeywordFromDB
+    getOneKeywordFromDB,
+    getTrendingKeywordsFromDB
 }
