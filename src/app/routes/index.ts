@@ -1,11 +1,12 @@
 import express from 'express'
+import { AssetsRoute } from '../modules/ownerAssets/ownerAssets.route'
 
 const router = express.Router()
 
 const moduleRoutes = [
   {
-    path: '',
-    route: '',
+    path: '/assets',
+    route: AssetsRoute,
   },
 ]
 
