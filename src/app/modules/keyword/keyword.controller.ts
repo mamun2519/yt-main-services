@@ -37,8 +37,20 @@ const oneKeywordGet = catchAsync(async (req: Request, res: Response) => {
 
 })
 
+const trendingKeywordsGet = catchAsync(async (req: Request, res: Response) => {
+  const result = await KeywordService.getTrendingKeywordsFromDB();
+
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: "Get all trending keywords",
+    data: result
+  })
+})
+
 export const keywordController = {
   keywordPost,
   keywordGet,
-  oneKeywordGet
+  oneKeywordGet,
+  trendingKeywordsGet
 }
