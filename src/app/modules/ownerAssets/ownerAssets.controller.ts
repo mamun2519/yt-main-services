@@ -78,6 +78,21 @@ const updateAssetsById = catchAsync(async (req: Request, res: Response) => {
   })
 })
 
+const allAssetsByAdmin = catchAsync(async (req: Request, res: Response) => {
+  const filters = pick(req.query, assetsFilterableFields)
+  const paginationOptions = pick(req.query, paginationFiled)
+  const result = await AssetsService.allAssetsByUserFromDB(
+    filters,
+    paginationOptions,
+  )
+  sendResponse<IAssets[]>(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: 'All Assets Fetch successfully !',
+    meta: result.meta,
+    data: result.data,
+  })
+})
 export const AssetsController = {
   assetsInsert,
   allAssetsByUser,
@@ -85,4 +100,5 @@ export const AssetsController = {
   getAssetsIdAdmin,
   deleteAssetById,
   updateAssetsById,
+  allAssetsByAdmin,
 }

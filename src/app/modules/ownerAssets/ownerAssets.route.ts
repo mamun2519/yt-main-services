@@ -13,5 +13,6 @@ router.post(
   AssetsController.assetsInsert,
 )
 router.get('/all-user', AssetsController.allAssetsByUser)
+router.get('/all-admin', AssetsController.allAssetsByAdmin)
 
 export const AssetsRoute = router

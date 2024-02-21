@@ -10,6 +10,10 @@ import { paginationHelpers } from '../../../helper/paginationHelper'
 import { assetsSearchableFields } from './ownerAssets.constants'
 import { SortOrder } from 'mongoose'
 import { IGenericResponse } from '../../../interface/common'
+import API_Error from '../../../error/apiError'
+import { StatusCodes } from 'http-status-codes'
+import natural from 'natural'
+import { Keyword } from '../keyword/keyword.model'
 const assetsInsertIntoDB = async (req: Request): Promise<IAssets> => {
   const files = req.files as IUploadFile[]
   console.log(files)
@@ -49,6 +53,15 @@ const allAssetsByUserFromDB = async (
   const andCondition = []
   if (searchTerm) {
     // implement search keyword store
+    // console.log(searchTerm)
+    const searchWord = natural.PorterStemmer.stem(searchTerm)
+    const searchDataStore = await Keyword.findOne({ searchTerm: searchWord })
+    if (searchDataStore) {
+      searchDataStore.count = searchDataStore.count + 1
+      await searchDataStore.save()
+    }
+    await Keyword.create({ searchTerm: searchWord })
+
     andCondition.push({
       $or: assetsSearchableFields.map(filed => ({
         [filed]: {
@@ -85,6 +98,11 @@ const allAssetsByUserFromDB = async (
 
 const getAssetsIdByUserFromDB = async (id: string): Promise<IAssets | null> => {
   const result = await Assets.findById(id)
+  if (!result) {
+    throw new API_Error(StatusCodes.NOT_FOUND, 'Assets Not Found')
+  }
+  result.click = result.click + 1
+  await result.save()
   return result
 }
 const getAssetsIdAdminFromDB = async (id: string): Promise<IAssets | null> => {
@@ -103,8 +121,52 @@ const updateAssetsByIdIntoDB = async (
   data: IAssets,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
 ): Promise<any> => {
-  const result = await Assets.updateOne({ _id: id }, data)
+  const result = await Assets.updateOne({ _id: id }, data, { new: true })
   return result
+}
+
+const allAssetsByAdminFromDB = async (
+  filters: IAssetsFilters,
+  pagination: IPaginationOptions,
+): Promise<IGenericResponse<IAssets[]>> => {
+  const { searchTerm, ...filterData } = filters
+
+  const { page, limit, skip, sortBy, sortOrder } =
+    paginationHelpers.calculatePagination(pagination)
+  const andCondition = []
+  if (searchTerm) {
+    andCondition.push({
+      $or: assetsSearchableFields.map(filed => ({
+        [filed]: {
+          $regex: searchTerm,
+          $options: 'i',
+        },
+      })),
+    })
+  }
+  // filtering
+  if (Object.keys(filterData).length) {
+    andCondition.push({
+      $and: Object.entries(filterData).map(([field, value]) => ({
+        [field]: value,
+      })),
+    })
+  }
+  const sortConditions: { [key: string]: SortOrder } = {}
+  if (sortBy && sortOrder) {
+    sortConditions[sortBy] = sortOrder
+  }
+  const whereConditions = andCondition.length > 0 ? { $and: andCondition } : {}
+  const result = await Assets.find(whereConditions).skip(skip).limit(limit)
+  const total = await Assets.countDocuments(whereConditions)
+  return {
+    meta: {
+      page,
+      limit,
+      total,
+    },
+    data: result,
+  }
 }
 export const AssetsService = {
   assetsInsertIntoDB,
@@ -113,4 +175,5 @@ export const AssetsService = {
   getAssetsIdAdminFromDB,
   deleteAssetsByIdIntoDB,
   updateAssetsByIdIntoDB,
+  allAssetsByAdminFromDB,
 }
