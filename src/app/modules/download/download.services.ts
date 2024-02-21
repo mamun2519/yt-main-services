@@ -2,9 +2,14 @@
 import { StatusCodes } from 'http-status-codes'
 import API_Error from '../../../error/apiError'
 import { Assets } from '../ownerAssets/ownerAssets.model'
-import { IDownload } from './download.interface'
+import { IDownload, IDownloadFilters } from './download.interface'
 import { Download } from './download.model'
 import { User } from '../user/user.model'
+import { IPaginationOptions } from '../../../interface/pagination'
+import { SortOrder } from 'mongoose'
+import { paginationHelpers } from '../../../helper/paginationHelper'
+import { downloadSearchableFields } from './download.constants'
+import { IGenericResponse } from '../../../interface/common'
 
 // URL/download/asset-download (POST)
 const saveDownloadIntoDB = async (
@@ -28,9 +33,53 @@ const saveDownloadIntoDB = async (
 }
 
 // URL/download/my-download-list (GET)
-const getDownloadListFromDB = async (): Promise<IDownload[]> => {
-  const result = await Download.find({}).populate('user').populate('assets')
-  return result
+const getDownloadListFromDB = async (
+  filters: IDownloadFilters,
+  pagination: IPaginationOptions,
+): Promise<IGenericResponse<IDownload[]>> => {
+  const { searchTerm, ...filterData } = filters
+
+  const { page, limit, skip, sortBy, sortOrder } =
+    paginationHelpers.calculatePagination(pagination)
+  const andCondition = []
+  if (searchTerm) {
+    andCondition.push({
+      $or: downloadSearchableFields.map(filed => ({
+        [filed]: {
+          $regex: searchTerm,
+          $options: 'i',
+        },
+      })),
+    })
+  }
+  // filtering
+  if (Object.keys(filterData).length) {
+    andCondition.push({
+      $and: Object.entries(filterData).map(([field, value]) => ({
+        [field]: value,
+      })),
+    })
+  }
+  const sortConditions: { [key: string]: SortOrder } = {}
+  if (sortBy && sortOrder) {
+    sortConditions[sortBy] = sortOrder
+  }
+  const whereConditions = andCondition.length > 0 ? { $and: andCondition } : {}
+
+  const total = await Assets.countDocuments(whereConditions)
+  const result = await Download.find(whereConditions)
+    .populate('user')
+    .populate('assets')
+    .skip(skip)
+    .limit(limit)
+  return {
+    meta: {
+      page,
+      limit,
+      total,
+    },
+    data: result,
+  }
 }
 
 const getOneDownloadFromDB = async (id: string): Promise<IDownload | null> => {

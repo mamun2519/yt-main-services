@@ -8,4 +8,9 @@ export type IDownload = {
   userEmail: string
 }
 
+export type IDownloadFilters = {
+  searchTerm?: string
+  userEmail?: string
+}
+
 export type downloadModel = Model<IDownload>
