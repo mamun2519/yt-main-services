@@ -1,4 +1,4 @@
-import { IKeyword, KeywordModel } from './keyword.interface';
+import { IKeyword, KeywordModel } from './keyword.interface'
 import { Schema, model } from 'mongoose'
 
 const keywordSchema = new Schema<IKeyword, KeywordModel>(
@@ -9,9 +9,8 @@ const keywordSchema = new Schema<IKeyword, KeywordModel>(
     },
     count: {
       type: Number,
-      required: [true, 'Count Is required'],
+      default: 0,
     },
-
   },
   {
     timestamps: true,
