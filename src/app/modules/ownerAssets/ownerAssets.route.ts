@@ -8,5 +8,6 @@ router.post(
   FileUploadHelper.upload.array('files', 4),
   AssetsController.assetsInsert,
 )
+router.get('/all-user', AssetsController.allAssetsByUser)
 
 export const AssetsRoute = router
