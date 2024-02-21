@@ -24,4 +24,4 @@ const downloadSchema = new Schema<IDownload, downloadModel>(
   },
 )
 
-export const Keyword = model<IDownload, downloadModel>('download', downloadSchema);
+export const Download = model<IDownload, downloadModel>('download', downloadSchema);
