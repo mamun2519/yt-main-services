@@ -54,10 +54,23 @@ const updateDownloadByIdIntoDB = async (
   return result
 }
 
+const myDownloadHistoryFromDB = async (
+  userId: string,
+): Promise<IDownload[]> => {
+  const user = await User.findById(userId)
+  console.log(user)
+  if (!user) {
+    throw new API_Error(StatusCodes.NOT_FOUND, 'User Not Found')
+  }
+  const result = await Download.find({ user: user._id }).populate('assets')
+  return result
+}
+
 export const downloadServices = {
   saveDownloadIntoDB,
   getDownloadListFromDB,
   getOneDownloadFromDB,
   deleteOneDownloadFromDB,
   updateDownloadByIdIntoDB,
+  myDownloadHistoryFromDB,
 }

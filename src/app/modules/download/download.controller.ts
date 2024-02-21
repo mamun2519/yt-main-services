@@ -66,6 +66,19 @@ const updateDownloadById = catchAsync(async (req: Request, res: Response) => {
     data: result,
   })
 })
+const myDownloadHistory = catchAsync(async (req: Request, res: Response) => {
+  const user = (req as JwtPayload).user
+  const result = await downloadServices.myDownloadHistoryFromDB(
+    user.userId as string,
+  )
+
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: 'My Download History successfully',
+    data: result,
+  })
+})
 
 export const downloadController = {
   downloadPost,
@@ -73,4 +86,5 @@ export const downloadController = {
   oneDownloadGet,
   downloadDelete,
   updateDownloadById,
+  myDownloadHistory,
 }
