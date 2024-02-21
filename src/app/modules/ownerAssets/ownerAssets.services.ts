@@ -97,10 +97,20 @@ const deleteAssetsByIdIntoDB = async (id: string): Promise<any> => {
   const result = await Assets.deleteOne({ _id: id })
   return result
 }
+
+const updateAssetsByIdIntoDB = async (
+  id: string,
+  data: IAssets,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+): Promise<any> => {
+  const result = await Assets.updateOne({ _id: id }, data)
+  return result
+}
 export const AssetsService = {
   assetsInsertIntoDB,
   allAssetsByUserFromDB,
   getAssetsIdByUserFromDB,
   getAssetsIdAdminFromDB,
   deleteAssetsByIdIntoDB,
+  updateAssetsByIdIntoDB,
 }

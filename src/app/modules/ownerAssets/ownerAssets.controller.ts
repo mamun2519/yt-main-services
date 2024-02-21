@@ -28,13 +28,61 @@ const allAssetsByUser = catchAsync(async (req: Request, res: Response) => {
   sendResponse<IAssets[]>(res, {
     statusCode: StatusCodes.OK,
     success: true,
-    message: 'User Fetch successfully !',
+    message: 'All Assets Fetch successfully !',
     meta: result.meta,
     data: result.data,
+  })
+})
+const getAssetsIdByUser = catchAsync(async (req: Request, res: Response) => {
+  const result = await AssetsService.getAssetsIdByUserFromDB(req.params.id)
+  sendResponse<IAssets>(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: 'Single Assets Fetch successfully !',
+
+    data: result,
+  })
+})
+const getAssetsIdAdmin = catchAsync(async (req: Request, res: Response) => {
+  const result = await AssetsService.getAssetsIdAdminFromDB(req.params.id)
+  sendResponse<IAssets>(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: 'Single Assets Fetch successfully !',
+
+    data: result,
+  })
+})
+
+const deleteAssetById = catchAsync(async (req: Request, res: Response) => {
+  const result = await AssetsService.deleteAssetsByIdIntoDB(req.params.id)
+  sendResponse<IAssets>(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: ' Assets Delete successfully !',
+
+    data: result,
+  })
+})
+const updateAssetsById = catchAsync(async (req: Request, res: Response) => {
+  const result = await AssetsService.updateAssetsByIdIntoDB(
+    req.params.id,
+    req.body,
+  )
+  sendResponse<IAssets>(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: 'Update Assets successfully !',
+
+    data: result,
   })
 })
 
 export const AssetsController = {
   assetsInsert,
   allAssetsByUser,
+  getAssetsIdByUser,
+  getAssetsIdAdmin,
+  deleteAssetById,
+  updateAssetsById,
 }
