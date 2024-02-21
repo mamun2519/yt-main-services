@@ -4,17 +4,19 @@ import { IDownload, downloadModel } from './download.interface'
 const downloadSchema = new Schema<IDownload, downloadModel>(
   {
     assetsId: {
-      type: String,
+      type: Schema.Types.ObjectId,
+      ref: 'Assets',
       required: [true, 'Assets Id Is required'],
     },
     userId: {
-        type: String,
-        required: [true, "User Id is required"]
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+      required: [true, 'User Id is required'],
     },
     userEmail: {
-        type: String,
-        required: [true, "User Email is required"]
-    }
+      type: String,
+      required: [true, 'User Email is required'],
+    },
   },
   {
     timestamps: true,
@@ -24,4 +26,7 @@ const downloadSchema = new Schema<IDownload, downloadModel>(
   },
 )
 
-export const Download = model<IDownload, downloadModel>('download', downloadSchema);
+export const Download = model<IDownload, downloadModel>(
+  'download',
+  downloadSchema,
+)
