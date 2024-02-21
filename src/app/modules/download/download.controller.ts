@@ -3,14 +3,19 @@ import catchAsync from '../../../shared/catchAsynFn'
 import { downloadServices } from './download.services'
 import sendResponse from '../../../shared/sendApiResponse'
 import { StatusCodes } from 'http-status-codes'
+import { JwtPayload } from 'jsonwebtoken'
 
 const downloadPost = catchAsync(async (req: Request, res: Response) => {
-  const result = await downloadServices.saveDownloadIntoDB(req.body)
+  const user = (req as JwtPayload).user
+  const result = await downloadServices.saveDownloadIntoDB(
+    req.body,
+    user.userId as string,
+  )
 
   sendResponse(res, {
     statusCode: StatusCodes.OK,
     success: true,
-    message: 'download history posted successfully',
+    message: 'download  posted successfully',
     data: result,
   })
 })
@@ -21,7 +26,7 @@ const downloadListGet = catchAsync(async (req: Request, res: Response) => {
   sendResponse(res, {
     statusCode: StatusCodes.OK,
     success: true,
-    message: 'Get Download History List successfully',
+    message: 'Get Download  List successfully',
     data: result,
   })
 })

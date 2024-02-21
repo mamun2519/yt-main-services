@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { StatusCodes } from 'http-status-codes'
 import API_Error from '../../../error/apiError'
 import { Assets } from '../ownerAssets/ownerAssets.model'
@@ -6,24 +7,29 @@ import { Download } from './download.model'
 import { User } from '../user/user.model'
 
 // URL/download/asset-download (POST)
-const saveDownloadIntoDB = async (data: IDownload): Promise<IDownload> => {
-  const assets = await Assets.findById(data.assetsId)
+const saveDownloadIntoDB = async (
+  data: IDownload,
+  userId: string,
+): Promise<IDownload> => {
+  const assets = await Assets.findById(data.assets)
   if (!assets) {
     throw new API_Error(StatusCodes.NOT_FOUND, 'Assets Not Found')
   }
   assets.download = assets.download + 1
   await assets.save()
-  const user = await User.findById(data.userId)
+  const user = await User.findById(userId)
   if (!user) {
     throw new API_Error(StatusCodes.NOT_FOUND, 'User Not Found')
   }
+  //@ts-ignore
+  data.user = userId
   const result = await Download.create(data)
   return result
 }
 
 // URL/download/my-download-list (GET)
 const getDownloadListFromDB = async (): Promise<IDownload[]> => {
-  const result = await Download.find()
+  const result = await Download.find({}).populate('user').populate('assets')
   return result
 }
 

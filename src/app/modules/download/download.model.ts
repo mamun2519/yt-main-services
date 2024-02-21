@@ -3,12 +3,12 @@ import { IDownload, downloadModel } from './download.interface'
 
 const downloadSchema = new Schema<IDownload, downloadModel>(
   {
-    assetsId: {
+    assets: {
       type: Schema.Types.ObjectId,
       ref: 'Assets',
       required: [true, 'Assets Id Is required'],
     },
-    userId: {
+    user: {
       type: Schema.Types.ObjectId,
       ref: 'User',
       required: [true, 'User Id is required'],

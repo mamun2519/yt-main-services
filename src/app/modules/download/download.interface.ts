@@ -3,8 +3,8 @@ import { IAssets } from '../ownerAssets/ownerAssets.interface'
 import { IUser } from '../user/user.interface'
 
 export type IDownload = {
-  assetsId: Types.ObjectId | IAssets
-  userId: Types.ObjectId | IUser
+  assets: Types.ObjectId | IAssets
+  user: Types.ObjectId | IUser
   userEmail: string
 }
 
