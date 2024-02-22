@@ -11,6 +11,7 @@ export type IAssets = {
   metaDescription: string
   uploadedUserEmail: string
   tags: string
+  totalDownload: number
   category: string
   // jpg: {
   //   url: string

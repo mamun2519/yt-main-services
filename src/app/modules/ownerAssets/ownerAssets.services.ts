@@ -15,6 +15,7 @@ import { StatusCodes } from 'http-status-codes'
 import natural from 'natural'
 import { Keyword } from '../keyword/keyword.model'
 const assetsInsertIntoDB = async (req: Request): Promise<IAssets> => {
+  console.log(req.files)
   const files = req.files as IUploadFile[]
   console.log(files)
   console.log(JSON.parse(req.body.data))

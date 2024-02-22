@@ -13,11 +13,15 @@ const AssetsSchema = new Schema<IAssets, AssetsModel>(
     // },
     click: {
       type: Number,
-      default: 0,
+      default: 1,
     },
     download: {
       type: Number,
-      default: 0,
+      default: 1,
+    },
+    totalDownload: {
+      type: Number,
+      default: 1,
     },
 
     alternativeText: {
