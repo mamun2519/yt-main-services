@@ -76,15 +76,18 @@ const updateDownloadById = catchAsync(async (req: Request, res: Response) => {
 })
 const myDownloadHistory = catchAsync(async (req: Request, res: Response) => {
   const user = (req as JwtPayload).user
+  const paginationOptions = pick(req.query, paginationFiled)
   const result = await downloadServices.myDownloadHistoryFromDB(
     user.userId as string,
+    paginationOptions,
   )
 
   sendResponse(res, {
     statusCode: StatusCodes.OK,
     success: true,
     message: 'My Download History successfully',
-    data: result,
+    meta: result.meta,
+    data: result.data,
   })
 })
 

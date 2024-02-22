@@ -105,14 +105,32 @@ const updateDownloadByIdIntoDB = async (
 
 const myDownloadHistoryFromDB = async (
   userId: string,
-): Promise<IDownload[]> => {
+  pagination: IPaginationOptions,
+): Promise<IGenericResponse<IDownload[]>> => {
   const user = await User.findById(userId)
-  console.log(user)
+
   if (!user) {
     throw new API_Error(StatusCodes.NOT_FOUND, 'User Not Found')
   }
-  const result = await Download.find({ user: user._id }).populate('assets')
-  return result
+  const { page, limit, skip, sortBy, sortOrder } =
+    paginationHelpers.calculatePagination(pagination)
+  const sortConditions: { [key: string]: SortOrder } = {}
+  if (sortBy && sortOrder) {
+    sortConditions[sortBy] = sortOrder
+  }
+  const result = await Download.find({ user: user._id })
+    .populate('assets')
+    .skip(skip)
+    .limit(limit)
+  const total = await Download.countDocuments({ user: user._id })
+  return {
+    meta: {
+      page,
+      limit,
+      total,
+    },
+    data: result,
+  }
 }
 
 export const downloadServices = {
