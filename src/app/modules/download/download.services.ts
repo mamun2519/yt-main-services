@@ -20,6 +20,10 @@ const saveDownloadIntoDB = async (
   if (!assets) {
     throw new API_Error(StatusCodes.NOT_FOUND, 'Assets Not Found')
   }
+  const allReadyDownloadAssets = await Download.findOne({ user: userId })
+  if (!allReadyDownloadAssets) {
+    assets.finalDownload = assets.finalDownload + 1
+  }
   assets.download = assets.download + 1
   await assets.save()
   const user = await User.findById(userId)

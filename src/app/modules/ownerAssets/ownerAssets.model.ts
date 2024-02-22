@@ -19,7 +19,7 @@ const AssetsSchema = new Schema<IAssets, AssetsModel>(
       type: Number,
       default: 1,
     },
-    totalDownload: {
+    finalDownload: {
       type: Number,
       default: 1,
     },
