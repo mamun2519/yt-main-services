@@ -14,7 +14,6 @@ const downloadPost = catchAsync(async (req: Request, res: Response) => {
     req.body,
     user.userId as string,
   )
-
   sendResponse(res, {
     statusCode: StatusCodes.OK,
     success: true,
