@@ -1,8 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { Request } from 'express'
 
-import { IUploadFile } from '../../../interface/file'
-import { v2 as cloudinary } from 'cloudinary'
 import { IAssets, IAssetsFilters } from './ownerAssets.interface'
 import { Assets } from './ownerAssets.model'
 import { IPaginationOptions } from '../../../interface/pagination'
