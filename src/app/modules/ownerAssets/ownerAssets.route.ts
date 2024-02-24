@@ -1,6 +1,6 @@
 import express from 'express'
 import { AssetsController } from './ownerAssets.controller'
-import { FileUploadHelper } from '../../../helper/fileUploader'
+// import { FileUploadHelper } from '../../../helper/fileUploader'
 const router = express.Router()
 //api
 router.delete('/:id', AssetsController.deleteAssetById)
@@ -10,7 +10,7 @@ router.get('/details-admin/:id', AssetsController.getAssetsIdAdmin)
 
 router.post(
   '/insert',
-  FileUploadHelper.upload.array('files', 4),
+  // FileUploadHelper.upload.array('files', 4),
   AssetsController.assetsInsert,
 )
 router.get('/all-user', AssetsController.allAssetsByUser)
