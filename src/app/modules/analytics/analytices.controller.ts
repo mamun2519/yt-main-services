@@ -1,6 +1,6 @@
 import { Request, Response } from 'express'
 import catchAsync from '../../../shared/catchAsynFn'
-import { AnalyticService } from './analatic.services'
+import { AnalyticService } from './analytics.services'
 import sendResponse from '../../../shared/sendApiResponse'
 import { StatusCodes } from 'http-status-codes'
 const GetAnalytic = catchAsync(async (req: Request, res: Response) => {

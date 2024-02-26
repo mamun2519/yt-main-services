@@ -1,5 +1,5 @@
 import express from 'express'
-import { AnalyticController } from './analatic.controller'
+import { AnalyticController } from './analytices.controller'
 
 const router = express.Router()
 router.get('/', AnalyticController.GetAnalytic)

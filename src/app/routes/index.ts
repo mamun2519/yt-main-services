@@ -2,7 +2,7 @@ import express from 'express'
 import { KeywordRoute } from '../modules/keyword/keyword.route'
 import { AssetsRoute } from '../modules/ownerAssets/ownerAssets.route'
 import { DownloadRoute } from '../modules/download/download.route'
-import { AnalyticRoute } from '../modules/analatic/analatic.route'
+import { AnalyticRoute } from '../modules/analytics/analytics.route'
 
 const router = express.Router()
 
