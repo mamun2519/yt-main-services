@@ -1,7 +1,7 @@
 import { Download } from '../download/download.model'
 import { Assets } from '../ownerAssets/ownerAssets.model'
 import { User } from '../user/user.model'
-import { IAnalyticsReturn } from './analatic.interface'
+import { IAnalyticsReturn } from './analytics.interface'
 
 const GetAnalyticIntoDB = async (): Promise<IAnalyticsReturn> => {
   const user = await User.countDocuments()
