@@ -51,8 +51,6 @@ const allAssetsByUserFromDB = async (
     paginationHelpers.calculatePagination(pagination)
   const andCondition = []
   if (searchTerm) {
-    // implement search keyword store
-    // console.log(searchTerm)
     const searchWord = natural.PorterStemmer.stem(searchTerm)
     const searchDataStore = await Keyword.findOne({ searchTerm: searchWord })
     if (searchDataStore) {
