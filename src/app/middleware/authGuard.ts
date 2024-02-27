@@ -10,6 +10,7 @@ const AuthGuard =
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const token = req.headers.authorization
+
       if (!token) {
         throw new API_Error(StatusCodes.UNAUTHORIZED, 'You are not authorized')
       }

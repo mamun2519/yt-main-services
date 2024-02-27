@@ -36,6 +36,9 @@ const assetsInsertIntoDB = async (req: Request): Promise<IAssets> => {
   // })
   // //@ts-ignore
   // data?.file = uploadFIles
+
+  // req.body.data.file = req.body.file
+  // console.log(req.body.data.file)
   const finalResult = await Assets.create(req.body)
 
   return finalResult
