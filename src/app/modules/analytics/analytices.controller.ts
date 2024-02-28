@@ -3,6 +3,7 @@ import catchAsync from '../../../shared/catchAsynFn'
 import { AnalyticService } from './analytics.services'
 import sendResponse from '../../../shared/sendApiResponse'
 import { StatusCodes } from 'http-status-codes'
+
 const GetAnalytic = catchAsync(async (req: Request, res: Response) => {
   const result = await AnalyticService.GetAnalyticIntoDB()
   sendResponse(res, {

@@ -2,7 +2,6 @@ import { Model } from 'mongoose'
 
 export type IAssets = {
   title: string
-  // assetURL: string
   click: number
   download: number
   alternativeText: string
@@ -10,28 +9,21 @@ export type IAssets = {
   metaTitle: string
   metaDescription: string
   uploadedUserEmail: string
-  tags: string
+  tags: {
+    tagOne: string
+    tagTwo: string
+    tagThree: string
+    tagFour: string
+    tagFive: string
+  }
   finalDownload: number
   category: string
-  // jpg: {
-  //   url: string
-  //   type: string
-  // }
-  // png: {
-  //   url: string
-  //   type: string
-  // }
-  // psd: {
-  //   url: string
-  //   type: string
-  // }
-  file: [
-    {
-      type: string
-      url: string
-      public_id: string
-    },
-  ]
+  subCategory: string
+  file: {
+    type: string
+    url: string
+    public_id: string
+  }
 }
 export type IAssetsFilters = {
   searchTerm?: string
