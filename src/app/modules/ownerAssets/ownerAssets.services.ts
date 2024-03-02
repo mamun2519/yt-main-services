@@ -13,32 +13,6 @@ import { StatusCodes } from 'http-status-codes'
 import natural from 'natural'
 import { Keyword } from '../keyword/keyword.model'
 const assetsInsertIntoDB = async (req: Request): Promise<IAssets> => {
-  // console.log(req.files)
-  // const files = req.files as IUploadFile[]
-  // console.log(files)
-
-  // const data: IAssets = JSON.parse(req.body.data)
-
-  // const uploadPromises = files.map(async file => {
-  //   return await cloudinary.uploader.upload(file.path)
-  // })
-
-  // // // Wait for all uploads to complete
-  // const results = await Promise.all(uploadPromises)
-  // console.log(results)
-  // // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  // const uploadFIles = results.map((file: any) => {
-  //   return {
-  //     public_id: file.public_id,
-  //     type: file.format,
-  //     url: file.secure_url,
-  //   }
-  // })
-  // //@ts-ignore
-  // data?.file = uploadFIles
-
-  // req.body.data.file = req.body.file
-
   const finalResult = await Assets.create(req.body)
 
   return finalResult
