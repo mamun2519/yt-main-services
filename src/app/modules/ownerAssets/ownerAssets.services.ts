@@ -12,6 +12,7 @@ import API_Error from '../../../error/apiError'
 import { StatusCodes } from 'http-status-codes'
 import natural from 'natural'
 import { Keyword } from '../keyword/keyword.model'
+//add
 const assetsInsertIntoDB = async (req: Request): Promise<IAssets> => {
   const finalResult = await Assets.create(req.body)
 
