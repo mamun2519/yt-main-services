@@ -44,10 +44,30 @@ const AssetsSchema = new Schema<IAssets, AssetsModel>(
       type: String,
       required: [true, 'uploaded UserEmail  Is Required'],
     },
-
     category: {
       type: String,
       required: [true, 'category Text Is Required'],
+    },
+    subCategory: {
+      type: String,
+      required: [true, 'Sub Category Text Is Required'],
+    },
+    tags: {
+      tag1: {
+        type: String,
+      },
+      tag2: {
+        type: String,
+      },
+      tag3: {
+        type: String,
+      },
+      tag4: {
+        type: String,
+      },
+      tag5: {
+        type: String,
+      },
     },
     // jpg: {
     //   url: {
@@ -79,22 +99,20 @@ const AssetsSchema = new Schema<IAssets, AssetsModel>(
     //     required: [true, 'URL  Is Required'],
     //   },
     // },
-    file: [
-      {
-        type: {
-          type: String,
-          required: [true, 'type Description Is Required'],
-        },
-        public_id: {
-          type: String,
-          required: [true, 'public_id Description Is Required'],
-        },
-        url: {
-          type: String,
-          required: [true, 'url Description Is Required'],
-        },
+    file: {
+      type: {
+        type: String,
+        required: [true, 'type Description Is Required'],
       },
-    ],
+      public_id: {
+        type: String,
+        required: [true, 'public_id Description Is Required'],
+      },
+      url: {
+        type: String,
+        required: [true, 'url Description Is Required'],
+      },
+    },
   },
   {
     timestamps: true,

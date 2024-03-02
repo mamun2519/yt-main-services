@@ -10,11 +10,11 @@ export type IAssets = {
   metaDescription: string
   uploadedUserEmail: string
   tags: {
-    tagOne: string
-    tagTwo: string
-    tagThree: string
-    tagFour: string
-    tagFive: string
+    tag1: string
+    tag2: string
+    tag3: string
+    tag4: string
+    tag5: string
   }
   finalDownload: number
   category: string
