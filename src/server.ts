@@ -2,7 +2,7 @@ import app from './app'
 import { Server } from 'http'
 import mongoose from 'mongoose'
 import config from './config'
-// Main Server
+//* Main Server
 const bootstrap = async () => {
   try {
     await mongoose.connect(config.database_url as string)
